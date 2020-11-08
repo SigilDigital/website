@@ -2144,28 +2144,24 @@ function contactForm() {
       requestData = dataArray.join('&');
     }
     
-    setTimeout(() => {
-      request.onreadystatechange = function() {
-        setTimeout(() => {
-          if (this.readyState == 4 && this.status == 200) {
-            formAlert.classList.add('is-active');
-            formAlert.classList.add('is-success');
-            formAlert.querySelector('.ajax-form-alert__content').innerHTML = form.getAttribute('data-message-success');
-          } else {
-            formAlert.classList.add('is-active');
-            formAlert.classList.add('is-error');
-            formAlert.querySelector('.ajax-form-alert__content').innerHTML = form.getAttribute('data-message-error');
-          }
-        }, 400);
-      };
-  
-      request.open("POST.html", "contact.html", true);
-      request.setRequestHeader(
-        "Content-type",
-        "application/x-www-form-urlencoded",
-      );
-      request.send(requestData);
-    }, 1000);
+    request.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        formAlert.classList.add('is-active');
+        formAlert.classList.add('is-success');
+        formAlert.querySelector('.ajax-form-alert__content').innerHTML = form.getAttribute('data-message-success');
+      } else {
+        formAlert.classList.add('is-active');
+        formAlert.classList.add('is-error');
+        formAlert.querySelector('.ajax-form-alert__content').innerHTML = form.getAttribute('data-message-error');
+      }
+    };
+
+    request.open("POST", "contact.php", true);
+    request.setRequestHeader(
+      "Content-type",
+      "application/x-www-form-urlencoded",
+    );
+    request.send(requestData);
   });
 
 }
